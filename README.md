@@ -118,3 +118,16 @@
     <script src="script.js"></script>
 </body>
 </html>
+:root { --primary: #6b8e23; --bg: #fdfaf5; --text: #333; }
+body { font-family: 'Poppins', sans-serif; background: #fdfaf5; color: var(--text); padding: 20px; display: flex; justify-content: center; }
+.app-container { max-width: 600px; width: 100%; }
+header { text-align: center; }
+h1 { color: var(--primary); }
+.progress-container { background: #e0e0e0; border-radius: 10px; height: 10px; overflow: hidden; }
+#progress-bar { width: 0%; height: 100%; background: var(--primary); transition: 0.3s; }
+.step { display: none; background: white; padding: 25px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+.active { display: block; }
+.category-title { display: block; font-weight: 700; margin-top: 15px; font-size: 0.8rem; color: #777; text-transform: uppercase; }
+.option { display: block; padding: 10px; border: 1px solid #eee; border-radius: 8px; margin-top: 5px; cursor: pointer; }
+button { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; margin-top: 20px; }
+.consult-btn { display: inline-block; background: var(--primary); color: white; padding: 10px 20px; border-radius: 25px; text-decoration: none; font-weight: 600; margin-top: 15px; }
