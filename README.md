@@ -131,3 +131,45 @@ h1 { color: var(--primary); }
 .option { display: block; padding: 10px; border: 1px solid #eee; border-radius: 8px; margin-top: 5px; cursor: pointer; }
 button { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; margin-top: 20px; }
 .consult-btn { display: inline-block; background: var(--primary); color: white; padding: 10px 20px; border-radius: 25px; text-decoration: none; font-weight: 600; margin-top: 15px; }
+const doshaData = {
+    vata: { diet: "Warm, cooked, grounding foods.", life: "Regular routines and warm environments." },
+    pitta: { diet: "Cooling, refreshing, non-spicy foods.", life: "Cool environments and stress management." },
+    kapha: { diet: "Light, spicy, and warming foods.", life: "Active lifestyle and vigorous exercise." }
+};
+
+function nextStep(step) {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step-' + step).classList.add('active');
+    const percent = Math.round(((step - 1) / 3) * 100);
+    document.getElementById('progress-bar').style.width = percent + "%";
+    document.getElementById('progress-text').innerText = percent + "%";
+}
+
+function calculateResults() {
+    let counts = { vata: 0, pitta: 0, kapha: 0 };
+    const checked = document.querySelectorAll('input[type="radio"]:checked');
+    if (checked.length < 15) { alert("Please complete all questions."); return; }
+    checked.forEach(input => counts[input.dataset.dosha]++);
+    const total = checked.length;
+    const v = Math.round((counts.vata / total) * 100), p = Math.round((counts.pitta / total) * 100), k = Math.round((counts.kapha / total) * 100);
+    let dom = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+    displayRoadmap(dom, v, p, k);
+    nextStep(4);
+}
+
+function displayRoadmap(dom, v, p, k) {
+    const res = doshaData[dom];
+    document.getElementById('result-summary').innerHTML = `<h2 style="text-align:center; color:var(--primary);">Prakriti: ${dom.toUpperCase()}</h2><p style="text-align:center;">V:${v}% | P:${p}% | K:${k}%</p>`;
+    document.getElementById('roadmap-content').innerHTML = `
+        <div style="background:#f9f9f9; padding:15px; border-radius:10px;">
+            <p><strong>🥗 Diet:</strong> ${res.diet}</p>
+            <p><strong>🧘 Lifestyle:</strong> ${res.life}</p>
+        </div>
+        <div style="text-align:center; margin-top:20px; border:1px dashed var(--primary); padding:15px;">
+            <p>Want a full medical consultation?</p>
+            <a href="#" class="consult-btn">🩺 Consult Doctor</a>
+        </div>
+        <div style="text-align:center; margin-top:20px;">
+            <a href="https://instagram.com/avinya__ayurveda" target="_blank" style="color:#e1306c; font-weight:bold; text-decoration:none;">📸 @avinya__ayurveda</a>
+        </div>`;
+}
